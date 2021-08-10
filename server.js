@@ -8,12 +8,15 @@ const jwksClient = require('jwks-rsa');
 const JWKSURI = process.env.JWKSURI
 const app = express();
 app.use(cors());
+const mongoose = require("mongoose");
 const client = jwksClient({
   jwksUri: JWKSURI,
 }) // to send request to Auth0
+const {seedUserData} = require('./models/user.model');
+const getBooks = require('./controller/books.controller');
 
 const PORT = process.env.PORT || 3001;
-
+mongoose.connect("mongodb://localhost:27017/_YOUR_DB_NAME_", { useNewUrlParser: true, useUnifiedTopology: true });
 function getKey(header, callback){
   client.getSigningKey(header.kid, function(err, key) {
     var signingKey = key.publicKey || key.rsaPublicKey;
@@ -37,5 +40,10 @@ jwt.verify(token, getKey, {}, (error, user) => {
   response.json(user)
 })
 })
+
+seedUserData();
+
+app.get('/books',getBooks);
+
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
