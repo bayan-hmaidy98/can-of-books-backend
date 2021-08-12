@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bookSchema = require('./books.model');
+const bookSchema = require('./book.model');
 
 const userSchema = new mongoose.Schema({
     email: { type: String },
@@ -10,7 +10,7 @@ const userModel = mongoose.model('users', userSchema);
 
 const seedUserData =() => {
     const newUser = new userModel({ 
-        ownerEmail: 'bayanhdy98@gmail.com',
+       email: 'bayanhdy98@gmail.com',
         books: [
             {
                 bookName: 'The Prophet',
