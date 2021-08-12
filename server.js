@@ -16,7 +16,7 @@ const {seedUserData} = require('./models/user.model');
 const getBooks = require('./controller/books.controller');
 
 const PORT = process.env.PORT || 3001;
-mongoose.connect("mongodb://localhost:27017/_YOUR_DB_NAME_", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost:27017/books", { useNewUrlParser: true, useUnifiedTopology: true });
 function getKey(header, callback){
   client.getSigningKey(header.kid, function(err, key) {
     var signingKey = key.publicKey || key.rsaPublicKey;
