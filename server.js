@@ -13,7 +13,9 @@ const client = jwksClient({
   jwksUri: JWKSURI,
 }) // to send request to Auth0
 const {seedUserData} = require('./models/user.model');
-const getBooks = require('./controller/books.controller');
+const {getBooks} = require('./controller/books.controller');
+const {createNewBook} = require('./controller/books.controller');
+const {deleteBook}= require('./controller/books.controller');
 
 const PORT = process.env.PORT || 3001;
 mongoose.connect("mongodb://localhost:27017/books", { useNewUrlParser: true, useUnifiedTopology: true });
@@ -44,6 +46,9 @@ jwt.verify(token, getKey, {}, (error, user) => {
 seedUserData();
 
 app.get('/books',getBooks);
+app.post('/book',createNewBook);
+app.delete('/book/:book_id', deleteBook);
 
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
+
